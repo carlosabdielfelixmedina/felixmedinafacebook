@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+nr5byc$rk_l9*sohm4ctw&6w*qr=%2hg1osm$#)3=d=dp=mf1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['examenu3felixmedina.pythonanywhere.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -95,16 +95,16 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         
         # Nombre de la base de datos que creamos
-        'NAME': 'facebook_integration_db',
+        'NAME': 'examenu3Felixmed$biblioteca_dbutres',
         
-        # Usuario de MySQL (por defecto 'root')
-        'USER': 'root',
+        # Usuario de MySQL
+        'USER': 'examenu3Felixmed',
         
-        # Contraseña de MySQL (CAMBIA ESTO por tu contraseña real)
-        'PASSWORD': '',
+        # Contraseña de MySQL
+        'PASSWORD': 'medina1x',
         
-        # Servidor donde está MySQL (local)
-        'HOST': 'localhost',
+        # Servidor PythonAnywhere
+        'HOST': 'examenu3Felixmedina.mysql.pythonanywhere-services.com',
         
         # Puerto por defecto de MySQL
         'PORT': '3306',
@@ -155,6 +155,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = '/home/examenu3Felixmedina/facebook/facebook_integration/staticfiles/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -166,4 +167,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Aquí pondremos las credenciales que obtuvimos de Facebook Developers
 FACEBOOK_APP_ID = '2067776030644149'
 FACEBOOK_APP_SECRET = '98a2b6c55f9fcecb5d098db0f9206c86'
-FACEBOOK_REDIRECT_URI = 'http://localhost:8000/facebook/callback/'
+FACEBOOK_REDIRECT_URI = 'https://examenu3felixmedina.pythonanywhere.com/facebook/callback/'

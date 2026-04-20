@@ -1,0 +1,213 @@
+====================================================
+  GUÍA PARA DESPLEGAR EN PYTHONANYWHERE
+  Proyecto: Facebook Integration Django
+====================================================
+
+DATOS DE TU CUENTA PYTHONANYWHERE
+----------------------------------
+  Host MySQL : examenu3Felixmedina.mysql.pythonanywhere-services.com
+  Base datos : examenu3Felixmed$biblioteca_dbutres
+  Usuario BD : examenu3Felixmed
+  Password BD: medina1x
+
+
+====================================================
+PASO 1 - ACTUALIZAR settings.py ANTES DE SUBIR
+====================================================
+Abre el archivo:
+  facebook_integration/facebook_integration/settings.py
+
+Haz estos cambios:
+
+  1) Cambia DEBUG a False:
+     DEBUG = False
+
+  2) Agrega tu dominio en ALLOWED_HOSTS:
+     ALLOWED_HOSTS = ['examenu3felixmedina.pythonanywhere.com']
+
+  3) Actualiza la configuración de la base de datos:
+
+     DATABASES = {
+         'default': {
+             'ENGINE': 'django.db.backends.mysql',
+             'NAME': 'examenu3Felixmed$biblioteca_dbutres',
+             'USER': 'examenu3Felixmed',
+             'PASSWORD': 'medina1x',
+             'HOST': 'examenu3Felixmedina.mysql.pythonanywhere-services.com',
+             'PORT': '3306',
+             'OPTIONS': {
+                 'charset': 'utf8mb4',
+                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+             },
+         }
+     }
+
+  4) Actualiza FACEBOOK_REDIRECT_URI con tu dominio real:
+     FACEBOOK_REDIRECT_URI = 'https://examenu3felixmedina.pythonanywhere.com/facebook/callback/'
+
+  5) Agrega al final del settings.py:
+     STATIC_ROOT = '/home/examenu3Felixmedina/facebook/facebook_integration/staticfiles/'
+
+
+====================================================
+PASO 2 - SUBIR EL CÓDIGO A PYTHONANYWHERE
+====================================================
+Tienes dos opciones:
+
+--- OPCIÓN A: Desde GitHub (recomendada) ---
+
+  1. Ve a https://www.pythonanywhere.com
+  2. Inicia sesión con tu cuenta
+  3. Ve a la pestaña "Consoles" → "Bash"
+  4. En la consola Bash escribe:
+
+     cd ~
+     git clone https://github.com/carlosabdielfelixmedina/felixmedinafacebook.git facebook
+
+--- OPCIÓN B: Subir ZIP manualmente ---
+
+  1. Comprime la carpeta C:\Users\fcarl\facebook\ en un .zip
+  2. Ve a PythonAnywhere → pestaña "Files"
+  3. Sube el .zip a /home/examenu3Felixmedina/
+  4. En la consola Bash descomprímelo:
+     cd ~
+     unzip felixmedinafacebook.zip -d facebook
+
+
+====================================================
+PASO 3 - CREAR ENTORNO VIRTUAL EN PYTHONANYWHERE
+====================================================
+En la consola Bash de PythonAnywhere:
+
+  cd ~/facebook
+  python3 -m venv venv
+  source venv/bin/activate
+  pip install -r facebook_integration/requirements.txt
+
+
+====================================================
+PASO 4 - CREAR LA BASE DE DATOS EN PYTHONANYWHERE
+====================================================
+  1. Ve a la pestaña "Databases" en PythonAnywhere
+  2. Verifica que ya existe la base de datos:
+       examenu3Felixmed$biblioteca_dbutres
+     (si no existe, créala desde ahí)
+  3. La contraseña de MySQL es: medina1x
+
+
+====================================================
+PASO 5 - APLICAR MIGRACIONES
+====================================================
+En la consola Bash (con el venv activado):
+
+  cd ~/facebook/facebook_integration
+  python manage.py migrate
+  python manage.py createsuperuser
+
+
+====================================================
+PASO 6 - RECOPILAR ARCHIVOS ESTÁTICOS
+====================================================
+
+  python manage.py collectstatic
+
+
+====================================================
+PASO 7 - CONFIGURAR LA WEB APP EN PYTHONANYWHERE
+====================================================
+  1. Ve a la pestaña "Web"
+  2. Clic en "Add a new web app"
+  3. Selecciona tu dominio: examenu3felixmedina.pythonanywhere.com
+  4. Selecciona "Manual configuration"
+  5. Selecciona Python 3.12
+
+  --- Configurar rutas ---
+
+  En "Code":
+    Source code:
+      /home/examenu3Felixmedina/facebook/facebook_integration
+
+    Working directory:
+      /home/examenu3Felixmedina/facebook/facebook_integration
+
+  En "Virtualenv":
+    /home/examenu3Felixmedina/facebook/venv
+
+  --- Editar el archivo WSGI ---
+
+  Haz clic en el enlace del archivo WSGI (algo como):
+    /var/www/examenu3felixmedina_pythonanywhere_com_wsgi.py
+
+  Borra todo el contenido y reemplázalo con esto:
+
+  --------------------------------------------------
+  import sys
+  import os
+
+  path = '/home/examenu3Felixmedina/facebook/facebook_integration'
+  if path not in sys.path:
+      sys.path.insert(0, path)
+
+  os.environ['DJANGO_SETTINGS_MODULE'] = 'facebook_integration.settings'
+
+  from django.core.wsgi import get_wsgi_application
+  application = get_wsgi_application()
+  --------------------------------------------------
+
+  Guarda el archivo.
+
+
+====================================================
+PASO 8 - CONFIGURAR ARCHIVOS ESTÁTICOS EN WEB APP
+====================================================
+En la sección "Static files" de la pestaña Web:
+
+  URL      : /static/
+  Directory: /home/examenu3Felixmedina/facebook/facebook_integration/staticfiles/
+
+
+====================================================
+PASO 9 - ACTUALIZAR FACEBOOK REDIRECT URI
+====================================================
+En Facebook Developers → tu app → Facebook Login → Configuración:
+
+  Agregar en "URIs de redireccionamiento OAuth válidos":
+    https://examenu3felixmedina.pythonanywhere.com/facebook/callback/
+
+
+====================================================
+PASO 10 - RECARGAR LA APP Y PROBAR
+====================================================
+  1. En la pestaña "Web" → clic en el botón verde "Reload"
+  2. Ve a: https://examenu3felixmedina.pythonanywhere.com
+  3. Inicia sesión con Facebook y prueba publicar
+
+
+====================================================
+COMANDOS RÁPIDOS PARA ACTUALIZACIONES FUTURAS
+====================================================
+Cuando hagas cambios en el código y los subas a GitHub,
+en la consola Bash de PythonAnywhere:
+
+  cd ~/facebook
+  git pull
+  source venv/bin/activate
+  cd facebook_integration
+  python manage.py migrate
+  python manage.py collectstatic --noinput
+
+  Luego en la pestaña Web → Reload
+
+
+====================================================
+RESUMEN DE URLS
+====================================================
+  Tu app   : https://examenu3felixmedina.pythonanywhere.com
+  Admin    : https://examenu3felixmedina.pythonanywhere.com/admin/
+  Login FB : https://examenu3felixmedina.pythonanywhere.com/facebook/login/
+  Dashboard: https://examenu3felixmedina.pythonanywhere.com/dashboard/
+
+
+====================================================
+  FIN DE LA GUÍA
+====================================================
