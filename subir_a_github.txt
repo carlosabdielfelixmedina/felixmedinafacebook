@@ -1,0 +1,137 @@
+====================================================
+  GUÍA PARA SUBIR EL PROYECTO A GITHUB
+  Repositorio: https://github.com/carlosabdielfelixmedina/felixmedinafacebook
+====================================================
+
+REQUISITOS PREVIOS
+------------------
+- Tener Git instalado: https://git-scm.com/download/win
+- Tener cuenta de GitHub: https://github.com/carlosabdielfelixmedina
+- El repositorio "felixmedinafacebook" ya creado en GitHub (vacío, sin README)
+
+
+----------------------------------------------------
+PASO 1 - CREAR ARCHIVO .gitignore
+----------------------------------------------------
+Antes de subir, crea un archivo .gitignore en la carpeta
+C:\Users\fcarl\facebook\ con este contenido para NO subir
+archivos sensibles ni innecesarios:
+
+  venv/
+  __pycache__/
+  *.pyc
+  *.pyo
+  .env
+  db.sqlite3
+  *.log
+
+IMPORTANTE: El archivo settings.py contiene credenciales
+(FACEBOOK_APP_SECRET, contraseña de MySQL). Se recomienda
+moverlas a un archivo .env y NO subirlo a GitHub.
+
+
+----------------------------------------------------
+PASO 2 - ABRIR LA TERMINAL EN LA CARPETA DEL PROYECTO
+----------------------------------------------------
+Abre PowerShell o CMD y navega al proyecto:
+
+  cd C:\Users\fcarl\facebook
+
+
+----------------------------------------------------
+PASO 3 - INICIALIZAR GIT
+----------------------------------------------------
+Ejecuta estos comandos uno por uno:
+
+  git init
+
+Esto crea el repositorio Git local en tu carpeta.
+
+
+----------------------------------------------------
+PASO 4 - AGREGAR TODOS LOS ARCHIVOS
+----------------------------------------------------
+
+  git add .
+
+Esto agrega todos los archivos al área de preparación (staging).
+Para verificar qué archivos se agregarán:
+
+  git status
+
+
+----------------------------------------------------
+PASO 5 - HACER EL PRIMER COMMIT
+----------------------------------------------------
+
+  git commit -m "Primer commit - Proyecto Facebook Integration Django"
+
+
+----------------------------------------------------
+PASO 6 - RENOMBRAR LA RAMA PRINCIPAL A main
+----------------------------------------------------
+
+  git branch -M main
+
+
+----------------------------------------------------
+PASO 7 - CONECTAR CON EL REPOSITORIO DE GITHUB
+----------------------------------------------------
+
+  git remote add origin https://github.com/carlosabdielfelixmedina/felixmedinafacebook.git
+
+
+----------------------------------------------------
+PASO 8 - SUBIR EL CÓDIGO A GITHUB
+----------------------------------------------------
+
+  git push -u origin main
+
+GitHub te pedirá tus credenciales:
+  - Usuario: carlosabdielfelixmedina
+  - Contraseña: usa un TOKEN de acceso personal (NO tu contraseña)
+
+Para crear un token de acceso:
+  1. Ve a https://github.com/settings/tokens
+  2. Clic en "Generate new token (classic)"
+  3. Dale un nombre, selecciona el scope "repo"
+  4. Clic en "Generate token"
+  5. COPIA el token generado (solo se muestra una vez)
+  6. Úsalo como contraseña al hacer git push
+
+
+----------------------------------------------------
+PASO 9 - VERIFICAR QUE SE SUBIÓ CORRECTAMENTE
+----------------------------------------------------
+Entra a tu repositorio en el navegador:
+
+  https://github.com/carlosabdielfelixmedina/felixmedinafacebook
+
+Deberías ver todos los archivos del proyecto.
+
+
+----------------------------------------------------
+COMANDOS PARA ACTUALIZACIONES FUTURAS
+----------------------------------------------------
+Cada vez que hagas cambios y quieras subirlos:
+
+  git add .
+  git commit -m "Descripción de los cambios realizados"
+  git push
+
+
+----------------------------------------------------
+RESUMEN DE TODOS LOS COMANDOS EN ORDEN
+----------------------------------------------------
+  cd C:\Users\fcarl\facebook
+  git init
+  git add .
+  git commit -m "Primer commit - Proyecto Facebook Integration Django"
+  git branch -M main
+  git remote add origin https://github.com/carlosabdielfelixmedina/felixmedinafacebook.git
+  git push -u origin main
+
+
+====================================================
+  FIN DE LA GUÍA
+====================================================

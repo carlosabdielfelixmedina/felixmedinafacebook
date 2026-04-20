@@ -1,0 +1,34 @@
+<!-- ===== social_app/templates/login.html ===== -->
+
+{% extends 'base.html' %}
+
+{% block title %}Iniciar Sesión con Facebook{% endblock %}
+
+{% block header %}Bienvenido al Sistema{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 50px 20px;">
+    <h2 style="color: #1877f2; margin-bottom: 20px;">
+        Conéctate con tu Cuenta de Facebook
+    </h2>
+    
+    <p style="font-size: 18px; color: #666; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        Para utilizar este sistema, necesitas autorizar la conexión con tu cuenta de Facebook.
+        Esto nos permitirá publicar contenido en tu nombre y obtener estadísticas de tus publicaciones.
+    </p>
+    
+    <a href="{% url 'facebook_login' %}" class="btn btn-facebook">
+        Iniciar Sesión con Facebook
+    </a>
+    
+    <div style="margin-top: 40px; padding: 20px; background: #f0f2f5; border-radius: 10px; max-width: 500px; margin-left: auto; margin-right: auto;">
+        <h3 style="color: #333; margin-bottom: 15px;">🔐 Seguridad y Privacidad</h3>
+        <ul style="text-align: left; color: #666; line-height: 1.8;">
+            <li>Solo solicitamos los permisos necesarios</li>
+            <li>No almacenamos tu contraseña de Facebook</li>
+            <li>Puedes revocar el acceso en cualquier momento</li>
+            <li>Tu información está protegida con cifrado</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

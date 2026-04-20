@@ -1,0 +1,41 @@
+<!-- ===== social_app/templates/error.html ===== -->
+
+{% extends 'base.html' %}
+
+{% block title %}Error - Integración Facebook{% endblock %}
+
+{% block header %}Oops... Algo salió mal{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 50px 20px;">
+    <div style="font-size: 80px; margin-bottom: 20px;">⚠️</div>
+    
+    <h2 style="color: #dc3545; margin-bottom: 20px;">{{ error }}</h2>
+    
+    {% if detalle %}
+        <div style="background: #f8d7da; padding: 20px; border-radius: 10px; margin: 30px auto; max-width: 600px; border-left: 5px solid #dc3545;">
+            <p style="color: #721c24; font-size: 16px; text-align: left;">
+                <strong>Detalles del error:</strong><br>
+                {{ detalle }}
+            </p>
+        </div>
+    {% endif %}
+    
+    <div style="margin-top: 40px;">
+        <a href="{% url 'facebook_login' %}" class="btn">
+            🔄 Intentar Nuevamente
+        </a>
+    </div>
+    
+    <div style="margin-top: 50px; padding: 25px; background: #fff3cd; border-radius: 10px; max-width: 700px; margin-left: auto; margin-right: auto; text-align: left;">
+        <h3 style="color: #856404; margin-bottom: 15px;">🛠️ Posibles soluciones:</h3>
+        <ol style="color: #856404; line-height: 2;">
+            <li>Verifica que la configuración de Facebook Developers sea correcta</li>
+            <li>Asegúrate de que la URL de callback coincida exactamente</li>
+            <li>Revisa que los permisos solicitados estén aprobados</li>
+            <li>Confirma que el access token no haya expirado</li>
+            <li>Verifica tu conexión a Internet</li>
+        </ol>
+    </div>
+</div>
+{% endblock %}

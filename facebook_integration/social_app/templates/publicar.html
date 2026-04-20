@@ -1,0 +1,94 @@
+<!-- ===== social_app/templates/publicar.html ===== -->
+
+{% extends 'base.html' %}
+
+{% block title %}Publicar en Facebook{% endblock %}
+
+{% block header %}Nueva Publicación{% endblock %}
+
+{% block content %}
+<div style="max-width: 700px; margin: 0 auto;">
+    <h2 style="color: #1877f2; margin-bottom: 30px;">✍️ Crear Publicación en Facebook</h2>
+    
+    <!-- Mensajes de éxito o error -->
+    {% if success %}
+        <div class="alert alert-success">
+            <strong>✅ {{ success }}</strong>
+            {% if post_id %}
+                <br><small>ID del post: {{ post_id }}</small>
+            {% endif %}
+            {% if page_name %}
+                <br><small>Publicado en: {{ page_name }}</small>
+            {% endif %}
+            {% if post_url %}
+                <br><br><a href="{{ post_url }}" target="_blank" style="color: #155724; font-weight: bold;">
+                    📱 Ver publicación en Facebook
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+    
+    {% if error %}
+        <div class="alert alert-error">
+            <strong>❌ {{ error }}</strong>
+            {% if detalle %}
+                <br><br><strong>Detalles:</strong> {{ detalle }}
+            {% endif %}
+            {% if solucion %}
+                <br><br><strong>💡 Solución:</strong> {{ solucion }}
+            {% endif %}
+            {% if json_response %}
+                <br><br><strong>Respuesta de Facebook:</strong>
+                <pre style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; margin-top: 10px;">{{ json_response }}</pre>
+            {% endif %}
+        </div>
+    {% endif %}
+    
+    {% if nota %}
+        <div class="alert" style="background: #fff3cd; border-color: #ffc107; color: #856404;">
+            <strong>ℹ️ Nota:</strong> {{ nota }}
+        </div>
+    {% endif %}
+    
+    <!-- Formulario de publicación -->
+    <form method="POST" action="{% url 'publicar_facebook' %}">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="mensaje">Escribe tu mensaje:</label>
+            <textarea 
+                name="mensaje" 
+                id="mensaje" 
+                placeholder="¿Qué estás pensando?
+
+Puedes escribir texto, emojis 🎉, hashtags #WebServices, y más..."
+                required
+                maxlength="5000"
+            ></textarea>
+            <small style="color: #999;">Máximo 5,000 caracteres</small>
+        </div>
+        
+        <div style="display: flex; gap: 15px; justify-content: space-between; align-items: center;">
+            <a href="{% url 'dashboard' %}" style="color: #666; text-decoration: none;">
+                ← Volver al Dashboard
+            </a>
+            
+            <button type="submit" class="btn" style="padding: 12px 30px;">
+                📤 Publicar en Facebook
+            </button>
+        </div>
+    </form>
+    
+    <!-- Consejos para publicaciones efectivas -->
+    <div style="margin-top: 40px; padding: 25px; background: #f0f2f5; border-radius: 12px;">
+        <h3 style="color: #333; margin-bottom: 15px;">💡 Consejos para publicaciones efectivas</h3>
+        <ul style="color: #666; line-height: 1.8;">
+            <li>Mantén el mensaje claro y conciso</li>
+            <li>Usa emojis para hacerlo más atractivo 🚀</li>
+            <li>Incluye hashtags relevantes #EducaciónDigital</li>
+            <li>Haz preguntas para fomentar interacción</li>
+            <li>Publica en horarios de mayor actividad (12-2pm, 7-9pm)</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
