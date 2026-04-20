@@ -1,119 +1,49 @@
 ====================================================
   GUÍA PARA DESPLEGAR EN PYTHONANYWHERE
   Proyecto: Facebook Integration Django
+  Usuario : examenu3Felixmedina
 ====================================================
-
-DATOS DE TU CUENTA PYTHONANYWHERE
-----------------------------------
-  Host MySQL : examenu3Felixmedina.mysql.pythonanywhere-services.com
-  Base datos : examenu3Felixmed$facebook
-  Usuario BD : examenu3Felixmed
-  Password BD: medina1x
 
 
 ====================================================
-PASO 1 - ACTUALIZAR settings.py ANTES DE SUBIR
+PASO 1 - CLONAR EL REPOSITORIO
 ====================================================
-Abre el archivo:
-  facebook_integration/facebook_integration/settings.py
-
-Haz estos cambios:
-
-  1) Cambia DEBUG a False:
-     DEBUG = False
-
-  2) Agrega tu dominio en ALLOWED_HOSTS:
-     ALLOWED_HOSTS = ['examenu3felixmedina.pythonanywhere.com']
-
-  3) Actualiza la configuración de la base de datos:
-
-     DATABASES = {
-         'default': {
-             'ENGINE': 'django.db.backends.mysql',
-             'NAME': 'examenu3Felixmed$facebook',
-             'USER': 'examenu3Felixmed',
-             'PASSWORD': 'medina1x',
-             'HOST': 'examenu3Felixmedina.mysql.pythonanywhere-services.com',
-             'PORT': '3306',
-             'OPTIONS': {
-                 'charset': 'utf8mb4',
-                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-             },
-         }
-     }
-
-  4) Actualiza FACEBOOK_REDIRECT_URI con tu dominio real:
-     FACEBOOK_REDIRECT_URI = 'https://examenu3felixmedina.pythonanywhere.com/facebook/callback/'
-
-  5) Agrega al final del settings.py:
-     STATIC_ROOT = '/home/examenu3Felixmedina/facebook/facebook_integration/staticfiles/'
-
-
-====================================================
-PASO 2 - SUBIR EL CÓDIGO A PYTHONANYWHERE
-====================================================
-Tienes dos opciones:
-
---- OPCIÓN A: Desde GitHub (recomendada) ---
-
-  1. Ve a https://www.pythonanywhere.com
-  2. Inicia sesión con tu cuenta
-  3. Ve a la pestaña "Consoles" → "Bash"
-  4. En la consola Bash escribe:
+  1. Ve a https://www.pythonanywhere.com e inicia sesión
+  2. Ve a la pestaña "Consoles" → clic en "Bash"
+  3. Escribe en la consola:
 
      cd ~
-     git clone https://github.com/carlosabdielfelixmedina/felixmedinafacebook.git facebook
-
---- OPCIÓN B: Subir ZIP manualmente ---
-
-  1. Comprime la carpeta C:\Users\fcarl\facebook\ en un .zip
-  2. Ve a PythonAnywhere → pestaña "Files"
-  3. Sube el .zip a /home/examenu3Felixmedina/
-  4. En la consola Bash descomprímelo:
-     cd ~
-     unzip felixmedinafacebook.zip -d facebook
+     git clone https://github.com/carlosabdielfelixmedina/felixmedinafacebook.git
 
 
 ====================================================
-PASO 3 - CREAR ENTORNO VIRTUAL EN PYTHONANYWHERE
+PASO 2 - CREAR ENTORNO VIRTUAL E INSTALAR DEPENDENCIAS
 ====================================================
-En la consola Bash de PythonAnywhere:
 
-  cd ~/facebook
+  cd ~/felixmedinafacebook
   python3 -m venv venv
   source venv/bin/activate
   pip install -r facebook_integration/requirements.txt
 
 
 ====================================================
-PASO 4 - CREAR LA BASE DE DATOS EN PYTHONANYWHERE
+PASO 3 - APLICAR MIGRACIONES
 ====================================================
-  1. Ve a la pestaña "Databases" en PythonAnywhere
-  2. Verifica que ya existe la base de datos:
-       examenu3Felixmed$facebook
-     (si no existe, créala desde ahí)
-  3. La contraseña de MySQL es: medina1x
 
-
-====================================================
-PASO 5 - APLICAR MIGRACIONES
-====================================================
-En la consola Bash (con el venv activado):
-
-  cd ~/facebook/facebook_integration
+  cd ~/felixmedinafacebook/facebook_integration
   python manage.py migrate
   python manage.py createsuperuser
 
 
 ====================================================
-PASO 6 - RECOPILAR ARCHIVOS ESTÁTICOS
+PASO 4 - RECOPILAR ARCHIVOS ESTÁTICOS
 ====================================================
 
   python manage.py collectstatic
 
 
 ====================================================
-PASO 7 - CONFIGURAR LA WEB APP EN PYTHONANYWHERE
+PASO 5 - CONFIGURAR LA WEB APP
 ====================================================
   1. Ve a la pestaña "Web"
   2. Clic en "Add a new web app"
@@ -125,17 +55,17 @@ PASO 7 - CONFIGURAR LA WEB APP EN PYTHONANYWHERE
 
   En "Code":
     Source code:
-      /home/examenu3Felixmedina/facebook/facebook_integration
+      /home/examenu3Felixmedina/felixmedinafacebook/facebook_integration
 
     Working directory:
-      /home/examenu3Felixmedina/facebook/facebook_integration
+      /home/examenu3Felixmedina/felixmedinafacebook/facebook_integration
 
   En "Virtualenv":
-    /home/examenu3Felixmedina/facebook/venv
+    /home/examenu3Felixmedina/felixmedinafacebook/venv
 
   --- Editar el archivo WSGI ---
 
-  Haz clic en el enlace del archivo WSGI (algo como):
+  Haz clic en el enlace del archivo WSGI:
     /var/www/examenu3felixmedina_pythonanywhere_com_wsgi.py
 
   Borra todo el contenido y reemplázalo con esto:
@@ -144,7 +74,7 @@ PASO 7 - CONFIGURAR LA WEB APP EN PYTHONANYWHERE
   import sys
   import os
 
-  path = '/home/examenu3Felixmedina/facebook/facebook_integration'
+  path = '/home/examenu3Felixmedina/felixmedinafacebook/facebook_integration'
   if path not in sys.path:
       sys.path.insert(0, path)
 
@@ -158,16 +88,16 @@ PASO 7 - CONFIGURAR LA WEB APP EN PYTHONANYWHERE
 
 
 ====================================================
-PASO 8 - CONFIGURAR ARCHIVOS ESTÁTICOS EN WEB APP
+PASO 6 - CONFIGURAR ARCHIVOS ESTÁTICOS EN WEB APP
 ====================================================
 En la sección "Static files" de la pestaña Web:
 
   URL      : /static/
-  Directory: /home/examenu3Felixmedina/facebook/facebook_integration/staticfiles/
+  Directory: /home/examenu3Felixmedina/felixmedinafacebook/facebook_integration/staticfiles/
 
 
 ====================================================
-PASO 9 - ACTUALIZAR FACEBOOK REDIRECT URI
+PASO 7 - AGREGAR REDIRECT URI EN FACEBOOK DEVELOPERS
 ====================================================
 En Facebook Developers → tu app → Facebook Login → Configuración:
 
@@ -176,7 +106,7 @@ En Facebook Developers → tu app → Facebook Login → Configuración:
 
 
 ====================================================
-PASO 10 - RECARGAR LA APP Y PROBAR
+PASO 8 - RECARGAR Y PROBAR
 ====================================================
   1. En la pestaña "Web" → clic en el botón verde "Reload"
   2. Ve a: https://examenu3felixmedina.pythonanywhere.com
@@ -184,12 +114,12 @@ PASO 10 - RECARGAR LA APP Y PROBAR
 
 
 ====================================================
-COMANDOS RÁPIDOS PARA ACTUALIZACIONES FUTURAS
+ACTUALIZACIONES FUTURAS
 ====================================================
-Cuando hagas cambios en el código y los subas a GitHub,
-en la consola Bash de PythonAnywhere:
+Cuando hagas cambios locales y los subas a GitHub,
+en la consola Bash de PythonAnywhere ejecuta:
 
-  cd ~/facebook
+  cd ~/felixmedinafacebook
   git pull
   source venv/bin/activate
   cd facebook_integration
