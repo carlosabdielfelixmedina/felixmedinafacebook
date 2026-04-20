@@ -6,7 +6,7 @@
 DATOS DE TU CUENTA PYTHONANYWHERE
 ----------------------------------
   Host MySQL : examenu3Felixmedina.mysql.pythonanywhere-services.com
-  Base datos : examenu3Felixmed$biblioteca_dbutres
+  Base datos : examenu3Felixmed$facebook
   Usuario BD : examenu3Felixmed
   Password BD: medina1x
 
@@ -30,7 +30,7 @@ Haz estos cambios:
      DATABASES = {
          'default': {
              'ENGINE': 'django.db.backends.mysql',
-             'NAME': 'examenu3Felixmed$biblioteca_dbutres',
+             'NAME': 'examenu3Felixmed$facebook',
              'USER': 'examenu3Felixmed',
              'PASSWORD': 'medina1x',
              'HOST': 'examenu3Felixmedina.mysql.pythonanywhere-services.com',
@@ -90,7 +90,7 @@ PASO 4 - CREAR LA BASE DE DATOS EN PYTHONANYWHERE
 ====================================================
   1. Ve a la pestaña "Databases" en PythonAnywhere
   2. Verifica que ya existe la base de datos:
-       examenu3Felixmed$biblioteca_dbutres
+       examenu3Felixmed$facebook
      (si no existe, créala desde ahí)
   3. La contraseña de MySQL es: medina1x
 

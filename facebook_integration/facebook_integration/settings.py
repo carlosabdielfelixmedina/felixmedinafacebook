@@ -95,7 +95,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         
         # Nombre de la base de datos que creamos
-        'NAME': 'examenu3Felixmed$biblioteca_dbutres',
+        'NAME': 'examenu3Felixmed$facebook',
         
         # Usuario de MySQL
         'USER': 'examenu3Felixmed',
